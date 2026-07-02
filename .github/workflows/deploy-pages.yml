@@ -1,0 +1,15 @@
+name: Deploy Pages
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+jobs:
+  deploy:
+    uses: tommyroar/.github/.github/workflows/deploy-pages.yml@main
+    with:
+      slug: vitamind
+      build_dir: vitamind
+      build_cmd: npm run build --
+    secrets: inherit
