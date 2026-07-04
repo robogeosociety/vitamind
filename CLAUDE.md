@@ -6,10 +6,10 @@
 
 Two deployment workflows exist:
 
-1. **Staging Preview** (`deploy-staging.yaml`): Auto-deploys on any Pull Request targeting `main`. After deploy, posts a PR comment with the staging URL. Verify at `https://tommyroar.github.io/vitamind/staging/`.
-2. **Production** (`deploy-spa.yaml`): Auto-deploys on merge to `main`. Verify at `https://tommyroar.github.io/vitamind/`.
+1. **Staging Preview** (`deploy-staging.yaml`): Auto-deploys on any Pull Request targeting `main`. After deploy, posts a PR comment with the staging URL. Verify at `https://robogeosociety.github.io/vitamind/staging/`.
+2. **Production** (`deploy-spa.yaml`): Auto-deploys on merge to `main`. Verify at `https://robogeosociety.github.io/vitamind/`.
 
-Docs are maintained directly in the [GitHub Wiki](https://github.com/tommyroar/vitamind/wiki). Use the `/wiki` slash command to push updates.
+Docs are maintained directly in the [GitHub Wiki](https://github.com/robogeosociety/vitamind/wiki). Use the `/wiki` slash command to push updates.
 
 ## Development Protocol
 
@@ -38,7 +38,7 @@ When performing development or deployment tasks:
 
 ### Phase 4: Deployment & Closure
 1. After the human merges to `main`, `deploy-spa.yaml` triggers automatically.
-2. Verify the fix at `https://tommyroar.github.io/vitamind/`.
+2. Verify the fix at `https://robogeosociety.github.io/vitamind/`.
 3. Only close the issue after confirming the production deployment succeeded.
 ## Pull requests — the "newspaper" framework
 
@@ -46,5 +46,5 @@ PR descriptions follow the **newspaper / information-pyramid** format: one self-
 front page (kicker → headline → dek → masthead → why → what → mermaid flow → screens →
 verification → risk) that reads top-to-bottom on an iPad-mini portrait display (1–2 pages;
 up to 4 for very complex *code* changes). Rebuild from the **full** diff, never append.
-Full rules: <https://github.com/tommyroar/.github/blob/main/PR_FRAMEWORK.md>. CI validates
-the body via the `pr-newspaper` workflow (the reusable gate in `tommyroar/pr-newspaper`).
+Full rules: <https://github.com/robogeosociety/.github/blob/main/PR_FRAMEWORK.md>. CI validates
+the body via the `pr-newspaper` workflow (the reusable gate in `robogeosociety/pr-newspaper`).

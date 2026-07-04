@@ -5,13 +5,13 @@ This project uses a two-workflow deployment strategy to GitHub Pages via the `gh
 ## Infrastructure Overview
 
 - **Deployment Branch**: `gh-pages`
-- **Production URL**: `https://tommyroar.github.io/vitamind/`
-- **Staging URL**: `https://tommyroar.github.io/vitamind/staging/`
+- **Production URL**: `https://robogeosociety.github.io/vitamind/`
+- **Staging URL**: `https://robogeosociety.github.io/vitamind/staging/`
 - **GitHub Pages Setting**: Must be set to **"Deploy from a branch"** targeting `gh-pages` at `/ (root)`.
 
 ## Docs
 
-Documentation is maintained directly in the [GitHub Wiki](https://github.com/tommyroar/vitamind/wiki). Use the `/wiki` slash command to push updates.
+Documentation is maintained directly in the [GitHub Wiki](https://github.com/robogeosociety/vitamind/wiki). Use the `/wiki` slash command to push updates.
 
 ## Workflows
 
@@ -35,4 +35,4 @@ Both workflows use `peaceiris/actions-gh-pages` with `keep_files: true` so that 
 
 ## Security & Secrets
 
-The SPA requires `VITE_MAPBOX_ACCESS_TOKEN` (a Mapbox public access token secured via domain whitelisting to `tommyroar.github.io/*`).
+The SPA requires `VITE_MAPBOX_ACCESS_TOKEN` (a Mapbox public access token secured via domain whitelisting to `robogeosociety.github.io/*`).
