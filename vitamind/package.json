@@ -11,26 +11,26 @@
     "test": "vitest --run"
   },
   "dependencies": {
-    "mapbox-gl": "^3.5.0",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "suncalc": "^1.9.0"
+    "mapbox-gl": "^3.25.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "suncalc": "^2.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.4.8",
     "@testing-library/react": "^16.0.0",
-    "@types/react": "^19.2.7",
+    "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^5.1.1",
-    "eslint": "^10.0.1",
-    "eslint-plugin-react-hooks": "^7.0.1",
-    "eslint-plugin-react-refresh": "^0.5.0",
-    "globals": "^17.3.0",
-    "jsdom": "^28.1.0",
-    "vite": "^7.3.1",
-    "vitest": "^4.0.18"
+    "@vitejs/plugin-react": "^6.0.3",
+    "eslint": "^10.6.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.3",
+    "globals": "^17.7.0",
+    "jsdom": "^29.1.1",
+    "vite": "^8.1.3",
+    "vitest": "^4.1.9"
   },
   "overrides": {
     "eslint-plugin-react-hooks": {
