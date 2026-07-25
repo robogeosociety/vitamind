@@ -1,0 +1,51 @@
+# CI — the check that actually verifies a change, including dependency bumps.
+#
+# The deploy workflows can't do this job: deploy-staging skips dependabot entirely
+# (`if: github.actor != 'dependabot[bot]'`, correctly — dependabot PRs must not deploy
+# and can't read deploy secrets), which left dependency PRs with *nothing verified* and
+# no way through the merge gate. This runs on every PR, needs no secrets, and deploys
+# nothing.
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: vitamind
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 20
+
+      - name: Install
+        run: npm install
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm test
+
+      # No Mapbox token here on purpose — dependabot PRs can't read secrets, and a build
+      # that only proves "the bundle compiles" doesn't need one. The token-bearing build
+      # still runs in deploy-spa on merge to main.
+      - name: Build
+        run: npm run build
