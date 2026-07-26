@@ -327,6 +327,10 @@ function App() {
   // Detect WebGL availability synchronously on first render so the effect
   // can bail out cleanly without a cascading setState-in-effect.
   const [mapError, setMapError] = useState(() => {
+    if (!mapboxgl.accessToken) {
+      console.error("Mapbox access token is not set. Please ensure VITE_MAPBOX_ACCESS_TOKEN is configured.");
+      return 'token-missing';
+    }
     if (!mapboxgl.supported()) {
       if (!mapboxgl.supported({ failIfMajorPerformanceCaveat: false })) {
         return 'webgl-unavailable';
@@ -336,7 +340,9 @@ function App() {
   });
 
   const [cityName, setCityName] = useState('');
-  const [loading, setLoading] = useState(true);
+  // Start un-loaded when a fatal condition was already detected above, so the init
+  // effect never has to setState synchronously just to clear the spinner.
+  const [loading, setLoading] = useState(() => !mapError);
 
   const fetchCityName = useCallback(async (lng, lat) => {
     try {
@@ -477,20 +483,12 @@ function App() {
   }, [requestLocation]);
 
   useEffect(() => {
-    if (!mapboxgl.accessToken) {
-      console.error("Mapbox access token is not set. Please ensure VITE_MAPBOX_ACCESS_TOKEN is configured.");
-      setMapError('token-missing');
-      setLoading(false);
-      return;
-    }
     if (mapRef.current) return; // Initialize map only once
 
-    // WebGL availability is pre-checked in the useState initializer above.
-    // If it was unavailable the error overlay is already rendered; skip init.
-    if (mapError) {
-      setLoading(false);
-      return;
-    }
+    // A missing token and unavailable WebGL are both pre-checked in the useState
+    // initializer above. If either tripped, the error overlay is already rendered;
+    // skip init.
+    if (mapError) return; // overlay already rendered; loading was initialised false
 
     // Wrap initialization in an async function so that the setState call in
     // the catch block is not synchronous in the effect body (satisfies the
