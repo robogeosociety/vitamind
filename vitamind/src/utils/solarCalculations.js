@@ -1,4 +1,8 @@
-import SunCalc from 'suncalc';
+// suncalc 2.x: pure ESM with named exports only (no default), and getPosition()
+// returns altitude/azimuth in DEGREES (1.x returned radians) — hence no rad->deg
+// conversion on its outputs below. The spherical trig further down is ours and
+// still works in radians.
+import * as SunCalc from 'suncalc';
 
 /**
  * Formats a Date object into a 2-digit hour/minute string.
@@ -44,7 +48,7 @@ export function getSunStats(latitude, longitude, date = new Date()) {
   let highestSunAngle = 0;
   if (solarNoon) {
     const sunPosition = SunCalc.getPosition(solarNoon, latitude, longitude);
-    const altitudeDegrees = sunPosition.altitude * 180 / Math.PI;
+    const altitudeDegrees = sunPosition.altitude;
     highestSunAngle = Math.max(0, altitudeDegrees);
   }
 
@@ -86,7 +90,7 @@ export function getVitaminDInfo(latitude, longitude, startDate = new Date()) {
 
     if (solarNoon) {
       const sunPosition = SunCalc.getPosition(solarNoon, latitude, longitude);
-      const altitudeDegrees = sunPosition.altitude * 180 / Math.PI;
+      const altitudeDegrees = sunPosition.altitude;
       if (altitudeDegrees >= 45) {
         vitaminDDate = currentDate;
         daysUntilVitaminD = i;
@@ -110,7 +114,7 @@ export function getVitaminDInfo(latitude, longitude, startDate = new Date()) {
     for (let i = 0; i < 24 * 60; i++) {
       const currentTime = new Date(startOfDay.getTime() + i * 60 * 1000);
       const sunPos = SunCalc.getPosition(currentTime, latitude, longitude);
-      const altitude = sunPos.altitude * 180 / Math.PI;
+      const altitude = sunPos.altitude;
       
       if (altitude >= 45) {
         if (!startTimeAbove45) startTimeAbove45 = currentTime;
@@ -135,7 +139,7 @@ export function getVitaminDInfo(latitude, longitude, startDate = new Date()) {
         let highestFutureAngle = 0;
         if (solarNoon) {
           const sunPosition = SunCalc.getPosition(solarNoon, latitude, longitude);
-          highestFutureAngle = sunPosition.altitude * 180 / Math.PI;
+          highestFutureAngle = sunPosition.altitude;
         }
         
         if (highestFutureAngle < 45) {
@@ -166,7 +170,7 @@ export function getYearlySunData(latitude, longitude) {
     const times = SunCalc.getTimes(date, latitude, longitude);
     const solarNoon = times.solarNoon || date;
     const sunPos = SunCalc.getPosition(solarNoon, latitude, longitude);
-    const angle = Math.max(0, sunPos.altitude * 180 / Math.PI);
+    const angle = Math.max(0, sunPos.altitude);
     data.push({ month: monthNames[m], angle });
   }
   return data;
@@ -179,7 +183,7 @@ export function getYearlySunData(latitude, longitude) {
  */
 export function getSubsolarPoint(date) {
   const sunPosAtNorthPole = SunCalc.getPosition(date, 90, 0);
-  const decDeg = sunPosAtNorthPole.altitude * 180 / Math.PI;
+  const decDeg = sunPosAtNorthPole.altitude;
   
   // Calculate Subsolar Longitude
   // Sun is over 0° longitude at solar noon at the prime meridian.
